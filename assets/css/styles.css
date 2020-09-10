@@ -1,0 +1,10 @@
+.firstTask {
+    border: 1px solid blue;
+    max-width: 70%;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+.firstTask > :nth-child(n) {
+    margin: 10px 20px 10px 5px;
+}
