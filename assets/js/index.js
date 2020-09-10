@@ -20,3 +20,43 @@ divFirstTask.appendChild(calculateButton);
 calculateButton.addEventListener('click', (event) => {
     return resultInput.value = 4/3 * Math.PI * input.value ** 3;
 });
+
+/*2.Дан элемент #elem. Реализуйте 4 функции:
+- Добавьте ему класс www.
+- Удалите у него класс www.
+- Проверьте наличие у него класса www.
+- Добавьте ему класс www, если его нет и удалите - если есть.*/
+
+const divSecondTask = document.getElementById('secondTask');
+
+divSecondTask.onclick = () => {
+    divSecondTask.classList.toggle('www');
+};
+
+console.log('Contains www class: ', isContainsClass(divSecondTask, 'www'));
+addClass(divSecondTask, 'www');
+console.log('Contains www class: ', isContainsClass(divSecondTask, 'www'));
+removeClass(divSecondTask, 'www');
+console.log('Contains www class: ', isContainsClass(divSecondTask, 'www'));
+setClass(divSecondTask, 'www');
+console.log('Contains www class: ', isContainsClass(divSecondTask, 'www'));
+
+function addClass(element, className) {
+    return element.classList.add(className);
+};
+
+function removeClass(element, className) {
+    return element.classList.remove(className);
+};
+
+function setClass(element, className) {
+    if(element.classList.contains(className)) {
+        return element.classList.remove(className);
+    } else {
+        return element.classList.add(className);
+    }
+};
+
+function isContainsClass(element, className) {
+    return element.classList.contains(className);
+}

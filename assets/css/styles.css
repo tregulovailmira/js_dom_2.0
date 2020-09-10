@@ -1,8 +1,8 @@
-.firstTask {
+.firstTask, .secondTask {
     border: 1px solid blue;
     max-width: 70%;
     padding: 10px;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 
 .firstTask > :nth-child(n) {
