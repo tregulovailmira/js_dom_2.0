@@ -8,6 +8,7 @@ const input = document.createElement('input');
 input.type = 'number';
 divFirstTask.appendChild(document.createTextNode('Enter radius, m:'));
 divFirstTask.appendChild(input);
+input.setAttribute('min', '0');
 
 let resultInput = document.createElement('input');
 resultInput.readOnly = true;
@@ -17,8 +18,14 @@ divFirstTask.appendChild(resultInput);
 const calculateButton = document.createElement('button');
 calculateButton.textContent = 'Calculate';
 divFirstTask.appendChild(calculateButton);
-calculateButton.addEventListener('click', (event) => {
-    return resultInput.value = 4/3 * Math.PI * input.value ** 3;
+calculateButton.addEventListener('click', () => {
+    const { value: inputValue } = input;
+
+    if(input.value < 0) {
+        throw new RangeError('Radius must be a positive value!');
+    } else {
+        return resultInput.value = 4/3 * Math.PI * inputValue ** 3;
+    }
 });
 
 /*2.Дан элемент #elem. Реализуйте 4 функции:
@@ -83,7 +90,7 @@ for (let item of arrayObj) {
     const value = `id = ${id}, title = ${title}, description = ${description},`
     const li = createListItem({
         value,
-        children: [createButton({ id, text: "Delete", onClick: buttonHandler })],
+        children: [createButton({ text: "Delete", onClick: buttonHandler })],
         onClick: liHandler,
     });
     list.append(li);
@@ -109,7 +116,7 @@ function createListItem({ value, children, onClick = () => {} }) {
 * @param {Function} props.onClick
 * @returns {HTMLButtonElement} btn
 */
-function createButton({text, onClick = () => {}, }) {
+function createButton({ text, onClick = () => {} }) {
     const button = document.createElement("button");
 
     button.onclick = onClick;
@@ -118,17 +125,12 @@ function createButton({text, onClick = () => {}, }) {
 }
 
 function buttonHandler(event) {
-    const {
-        target: {
-            dataset: { value },
-        },
-    } = event;
     event.target.parentNode.remove();
 }
 
 function liHandler(event) {
     const {
-        target: {classList}
+        target: { classList }
     } = event;
     classList.toggle('changeColor');
 }
