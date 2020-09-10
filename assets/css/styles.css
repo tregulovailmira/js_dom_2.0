@@ -1,4 +1,4 @@
-.firstTask, .secondTask, .thirdTask {
+.taskContainer {
     border: 1px solid blue;
     max-width: 70%;
     padding: 10px;
@@ -9,7 +9,7 @@
     margin: 10px 20px 10px 5px;
 }
 
-.thirdTask > ul > li {
+.taskContainer > ul > li {
     margin: 10px;
 }
 

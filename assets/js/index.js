@@ -132,3 +132,45 @@ function liHandler(event) {
     } = event;
     classList.toggle('changeColor');
 }
+
+/*4. Реализуйте класс Elem, который параметром принимает селектор одного HTML элемента и затем может выполнять
+с ним различные операции. Класс должен работать следующим образом:
+const elem = new Elem('селектор');
+elem.html('!'); //запишет в текст элемента '!'
+elem.append('!'); //запишет в начало элемента '!'
+elem.prepend('!'); //запишет в конец элемента '!'
+elem.attr('class', 'www'); //запишет в атрибут class значение www
+//Должны работать цепочки методов:
+elem.html('hello').append('!').prepend('!').attr('class', 'www').attr('title', 'hello');*/
+
+class Elem {
+    constructor(selector) {
+        if ( typeof selector === 'string') {
+            this.elem = document.querySelector(selector);
+        } else {
+            throw new TypeError('It is not a valid selector');
+        }
+    }
+
+    html = (string) => {
+        this.elem.textContent = string;
+        return this;
+    }
+
+    append = (string) => {
+        this.elem.textContent = this.elem.textContent + string;
+        return this;
+    }
+
+    prepend = (string) => {
+        this.elem.textContent = string + this.elem.textContent;
+        return this;
+    }
+
+    attr = (attribute, value) => {
+        this.elem.setAttribute(attribute, value);
+        return this;
+    }
+}
+
+const elem = new Elem('.fourthTask');
