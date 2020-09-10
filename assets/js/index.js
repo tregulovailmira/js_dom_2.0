@@ -59,4 +59,76 @@ function setClass(element, className) {
 
 function isContainsClass(element, className) {
     return element.classList.contains(className);
+};
+
+/*3. Вставьте элементы массива объектов(id, title, description) в конец ul так,
+чтобы каждый на каждый объект был свой li.
+Сделайте так, чтобы по нажатию на li - он подсвечивался другим цветом.
+Сделайте так, чтобы по нажатию на кнопку внтри li эта li удалялась из разметки.*/
+const divThirdTask = document.getElementById('thirdTask');
+const list = document.createElement('ul');
+divThirdTask.append(list);
+
+class Obj{
+    constructor(id, title, description) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+    }
+};
+const arrayObj = [ new Obj('first', 'test', 'testDescription'), new Obj('second', 'test2', 'testDescription2'), new Obj('third', 'test3', 'testDescription3') ];
+
+for (let item of arrayObj) {
+    const { id, title, description } = item;
+    const value = `id = ${id}, title = ${title}, description = ${description},`
+    const li = createListItem({
+        value,
+        children: [createButton({ id, text: "Delete", onClick: buttonHandler })],
+        onClick: liHandler,
+    });
+    list.append(li);
+}
+
+/*
+* @param {object} props
+* @param {string} props.value
+* @param {Node[]} props.children
+* @param {Function} props.onClick
+* @returns {HTMLLIElement} li
+*/
+function createListItem({ value, children, onClick = () => {} }) {
+    const li = document.createElement("li");
+    li.append(document.createTextNode(value), ...children);
+    li.onclick = onClick;
+    return li;
+}
+
+/*
+* @param {object} props
+* @param {string} props.text
+* @param {Function} props.onClick
+* @returns {HTMLButtonElement} btn
+*/
+function createButton({text, onClick = () => {}, }) {
+    const button = document.createElement("button");
+
+    button.onclick = onClick;
+    button.textContent = text;
+    return button;
+}
+
+function buttonHandler(event) {
+    const {
+        target: {
+            dataset: { value },
+        },
+    } = event;
+    event.target.parentNode.remove();
+}
+
+function liHandler(event) {
+    const {
+        target: {classList}
+    } = event;
+    classList.toggle('changeColor');
 }

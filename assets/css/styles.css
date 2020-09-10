@@ -1,4 +1,4 @@
-.firstTask, .secondTask {
+.firstTask, .secondTask, .thirdTask {
     border: 1px solid blue;
     max-width: 70%;
     padding: 10px;
@@ -7,4 +7,16 @@
 
 .firstTask > :nth-child(n) {
     margin: 10px 20px 10px 5px;
+}
+
+.thirdTask > ul > li {
+    margin: 10px;
+}
+
+li > button {
+    margin-left: 15px;
+}
+
+.changeColor {
+    background-color: lightgrey;
 }
