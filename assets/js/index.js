@@ -152,7 +152,7 @@ class Elem {
     constructor(selector) {
         this.elem = document.querySelector(selector);
         if (!this.elem) {
-            throw new TypeError('It is not a valid selector');
+            throw new TypeError('This selector is undefined');
         }
     }
 
