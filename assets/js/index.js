@@ -6,27 +6,29 @@ const divFirstTask = document.getElementById('firstTask');
 
 const input = document.createElement('input');
 input.type = 'number';
-divFirstTask.appendChild(document.createTextNode('Enter radius, m:'));
-divFirstTask.appendChild(input);
 input.setAttribute('min', '0');
 
 let resultInput = document.createElement('input');
 resultInput.readOnly = true;
-divFirstTask.appendChild(document.createTextNode('Sphere volume, m3:'));
-divFirstTask.appendChild(resultInput);
 
 const calculateButton = document.createElement('button');
 calculateButton.textContent = 'Calculate';
-divFirstTask.appendChild(calculateButton);
 calculateButton.addEventListener('click', () => {
-    const { value: inputValue } = input;
+    const {value: inputValue} = input;
 
-    if(input.value < 0) {
+    if (inputValue < 0) {
         throw new RangeError('Radius must be a positive value!');
     } else {
-        return resultInput.value = 4/3 * Math.PI * inputValue ** 3;
+        return resultInput.value = 4 / 3 * Math.PI * inputValue ** 3;
     }
 });
+
+divFirstTask.append(
+    document.createTextNode('Enter radius, m:'),
+    input,
+    document.createTextNode('Sphere volume, m3:'),
+    resultInput,
+    calculateButton);
 
 /*2.Дан элемент #elem. Реализуйте 4 функции:
 - Добавьте ему класс www.
@@ -35,10 +37,6 @@ calculateButton.addEventListener('click', () => {
 - Добавьте ему класс www, если его нет и удалите - если есть.*/
 
 const divSecondTask = document.getElementById('secondTask');
-
-divSecondTask.onclick = () => {
-    divSecondTask.classList.toggle('www');
-};
 
 console.log('Contains www class: ', isContainsClass(divSecondTask, 'www'));
 addClass(divSecondTask, 'www');
@@ -50,23 +48,19 @@ console.log('Contains www class: ', isContainsClass(divSecondTask, 'www'));
 
 function addClass(element, className) {
     return element.classList.add(className);
-};
+}
 
 function removeClass(element, className) {
     return element.classList.remove(className);
-};
+}
 
 function setClass(element, className) {
-    if(element.classList.contains(className)) {
-        return element.classList.remove(className);
-    } else {
-        return element.classList.add(className);
-    }
-};
+    return element.classList.toggle(className);
+}
 
 function isContainsClass(element, className) {
     return element.classList.contains(className);
-};
+}
 
 /*3. Вставьте элементы массива объектов(id, title, description) в конец ul так,
 чтобы каждый на каждый объект был свой li.
@@ -76,25 +70,34 @@ const divThirdTask = document.getElementById('thirdTask');
 const list = document.createElement('ul');
 divThirdTask.append(list);
 
-class Obj{
-    constructor(id, title, description) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-    }
-};
-const arrayObj = [ new Obj('first', 'test', 'testDescription'), new Obj('second', 'test2', 'testDescription2'), new Obj('third', 'test3', 'testDescription3') ];
+const arrayObj = [
+    {
+        id: '1',
+        title: 'test',
+        description: 'testDescription',
+    },
+    {
+        id: '2',
+        title: 'test2',
+        description: 'testDescription2',
+    },
+    {
+        id: '3',
+        title: 'test3',
+        description: 'testDescription3',
+    }];
 
-for (let item of arrayObj) {
-    const { id, title, description } = item;
-    const value = `id = ${id}, title = ${title}, description = ${description},`
-    const li = createListItem({
-        value,
-        children: [createButton({ text: "Delete", onClick: buttonHandler })],
-        onClick: liHandler,
-    });
-    list.append(li);
-}
+arrayObj.forEach((item) => {
+        const {id, title, description} = item;
+        const value = `id = ${id}, title = ${title}, description = ${description},`
+        const li = createListItem({
+            value,
+            children: [createButton({text: "Delete", onClick: buttonHandler})],
+            onClick: liHandler,
+        });
+        list.append(li);
+    }
+);
 
 /*
 * @param {object} props
@@ -130,7 +133,7 @@ function buttonHandler(event) {
 
 function liHandler(event) {
     const {
-        target: { classList }
+        target: {classList}
     } = event;
     classList.toggle('changeColor');
 }
@@ -147,9 +150,8 @@ elem.html('hello').append('!').prepend('!').attr('class', 'www').attr('title', '
 
 class Elem {
     constructor(selector) {
-        if ( typeof selector === 'string') {
-            this.elem = document.querySelector(selector);
-        } else {
+        this.elem = document.querySelector(selector);
+        if (!this.elem) {
             throw new TypeError('It is not a valid selector');
         }
     }
